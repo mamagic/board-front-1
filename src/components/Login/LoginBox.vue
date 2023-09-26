@@ -55,29 +55,33 @@
 </template>
 
 <script>
+import axios from 'axios'
+
+const instance = axios.create()
+
 export default {
   data() {
     return {
-      userId: null,
-      userPassword: null,
+      username: null,
+      password: null,
     };
   },
   methods: {
     loginSubmit() {
       let saveData = {};
-      saveData.userId = this.userId;
-      saveData.userPassword = this.userPassword;
+      saveData.username = this.username;
+      saveData.password = this.password;
 
       try {
-        this.$axios
-          .post(HOST + "/signin", JSON.stringify(saveData), {
+        instance 
+          .post("http://localhost:8081/login", JSON.stringify(saveData), {
             headers: {
               "Content-Type": `application/json`,
             },
           })
           .then((res) => {
             if (res.status === 200) {
-              // 로그인 성공시 처리해줘야할 부분
+              console.log(res.token);
             }
           });
       } catch (error) {
